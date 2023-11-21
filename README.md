@@ -2,7 +2,7 @@ echarts服务端渲染工具，生成SVG字符串，公司项目用。
 
 # 使用方法
 
-node版本需要`v18.15.0`，也可参照[这里](https://github.com/vercel/pkg-fetch/blob/main/patches/patches.json)去使用其他版本node 
+node版本测试时使用的是`v18.15.0`，但其他版本应该也可行?
 
 0. 执行 `npm i; npm run build` 下载依赖和编译代码到win/linux可执行文件。
 
