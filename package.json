@@ -1,0 +1,19 @@
+{
+  "name": "echart-server-renderer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "pkg -t node18-linux-x64,node18-macos-x64,node18-win-x64 -o dist/echart-server-renderer index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "echarts": "^5.4.3"
+  },
+  "devDependencies": {
+    "pkg": "^5.8.1"
+  }
+}
