@@ -40,11 +40,14 @@ program
     .option('-w, --width <pixels>', 'svg宽度', 800)
     .option('-h, --height <pixels>', 'svg高度', 600)
     .argument('<chartDefinition>', '必填，图表定义，为base64编码的js片段，其必须在顶层引入函数CHART_DEF，其接受单个参数data，为chartData中引入的变量 CHART_DATA')
-    .argument('[chartData]', '选填，图表所使用的数据，为base64编码的js片段，其必须在顶层引入变量CHART_DATA，不传时默认为base64("CHART_DATA={}")', toBase64('CHART_DATA={}'));
+    .argument('[chartData]', '选填，图表所使用的数据，为base64编码的js片段，其必须在顶层引入变量CHART_DATA，不传时默认为"CHART_DATA={}"');
 
 program.parse();
 const {width, height, file: withFile, outputFile} = program.opts()
-const [chartDefinition, chartData] = program.args
+const [chartDefinition, chartData = toBase64('CHART_DATA={}')] = program.args
+
+var CHART_DEF;
+var CHART_DATA = {};
 
 if (withFile) {
     try {
@@ -54,12 +57,14 @@ if (withFile) {
         console.error(`eval 文件 ${chartDefinition} 失败，请检查其是否存在且是合法js文件`)
         throw e
     }
-    try {
-        const chartDataStr = readFileSync(chartData).toString('utf8')
-        eval(chartDataStr)
-    } catch (e) {
-        console.error(`eval 文件 ${chartData} 失败，请检查其是否存在且是否是合法js文件`)
-        throw e
+    if (chartData && chartData != toBase64('CHART_DATA={}')) {
+        try {
+            const chartDataStr = readFileSync(chartData).toString('utf8')
+            eval(chartDataStr)
+        } catch (e) {
+            console.error(`eval 文件 ${chartData} 失败，请检查其是否存在且是否是合法js文件`)
+            throw e
+        }
     }
 } else {
     try {
@@ -83,6 +88,7 @@ if (!CHART_DEF) {
 if (!CHART_DATA) {
     throw 'variable CHART_DATA not found or is nullish!'
 }
+
 // 通过输出流返回结果SVG字符串
 const result = renderSvgStr(width, height, CHART_DEF(CHART_DATA))
 if (outputFile) {
