@@ -1,5 +1,5 @@
 // 直接把整个文件内容转成base64作为参数
-REQUEST_PARAM = {
+CHART_PARAM = {
     width: 1440,
     height: 900,
     option: {
