@@ -35,10 +35,10 @@ function toBase64(str) {
 
 program
     .description("渲染echarts图标到SVG，其中图表定义和图表数据均使用base64编码；在图表定义中可以使用echarts库中的玩意（const echarts=require('echarts')）")
-    .option('-f, --file', '允许传文件名而非base64，供测试用')
+    .option('-f, --file', '允许传文件名而非base64，测试用')
+    .option('-o, --output-file <file_name>', '指定输出到文件而非输出流，测试用')
     .option('-w, --width <pixels>', 'svg宽度', 800)
     .option('-h, --height <pixels>', 'svg高度', 600)
-    .option('-o, --output-file <file_name>', '指定输出到文件而非输出流，测试用')
     .argument('<chartDefinition>', '必填，图表定义，为base64编码的js片段，其必须在顶层引入函数CHART_DEF，其接受单个参数data，为chartData中引入的变量 CHART_DATA')
     .argument('[chartData]', '选填，图表所使用的数据，为base64编码的js片段，其必须在顶层引入变量CHART_DATA，不传时默认为base64("CHART_DATA={}")', toBase64('CHART_DATA={}'));
 
